@@ -1,0 +1,745 @@
+<OBJECT classid="clsid:F1317711-6BDE-4658-ABAA-39E31D3704D3" codebase="SDRdCard.cab#version=2,0,1,0" width=0
+        height=0 id=idcard name=rdcard>
+</OBJECT>
+<form id="edit-form" class="form-horizontal" method="POST" action="">
+
+	<div class="form-group">
+		<label for="c-gender" class="control-label col-xs-12 col-sm-2">预约类型:</label>
+		<div class="col-xs-12 col-sm-8">
+			{:build_radios('row[type]',	['0'=>'个人', '1'=>'团体','2'=>'临时登记'])}
+		</div>
+	</div>
+ 	<div class="form-group">
+		<label for="c-gender" class="control-label col-xs-12 col-sm-2">体检类型:</label>
+		<div class="col-xs-12 col-sm-8">{:build_radios('row[physictype]',['0'=>'食药', '1'=>'卫生监督'],null,'physictype')}</div>
+	</div>
+	<div class="form-group">
+		<label for="c-name" class="control-label col-xs-12 col-sm-2">姓名:</label>
+		<div class="col-xs-12 col-sm-4">
+			<input id="c-username" class="form-control" name="row[name]"
+				type="text" value="">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">身份证号:</label>
+		<div class="col-xs-12 col-sm-4">
+			<input id="identitycard" class="form-control" name="row[identitycard]"
+				type="text" value="">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">性别:</label>
+		<div class="col-xs-12 col-sm-4">{:build_radios('row[sex]',
+			['0'=>'男', '1'=>'女'],null,"c-sex")}</div>
+	</div>
+	<div class="form-group">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">年龄:</label>
+		<div class="col-xs-12 col-sm-4">
+			<input id="c-age" class="form-control" name="row[age]"
+				type="text" value="">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">手机:</label>
+		<div class="col-xs-12 col-sm-4">
+			<input id="c-phone" class="form-control" name="row[phone]"
+				type="text" value="">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">从业类别:</label>
+		<div class="form-inline" style="margin-left: 10px;">
+			<select class="first form-control" name="row[parent]" id="pid-s" style="margin-left: 15px;">
+				{foreach $pid as $index=>$vo}					
+					<option value="{$vo.id}" {if condition="$vo.id eq 1"} selected = "selected" {/if}>
+						{$vo.name}
+					</option> 
+				{/foreach}
+			</select>
+			<!--  <select id="names" class="second form-control" name="row[son]">
+			</select> -->
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">从业单位:</label>
+		<div class="col-xs-12 col-sm-4">
+			<input id="c-nickname" class="form-control"
+				name="row[company]" type="text" value="">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">是否选择邮寄:</label>
+		<div class="col-xs-12 col-sm-4">
+			{:build_radios('row[express]',['0'=>'自取', '1'=>'邮寄'],null,'express')}
+		</div>
+	</div>	
+	<div class="form-group" id="express">
+		<label for="c-nickname" class="control-label col-xs-12 col-sm-2">邮寄地址:</label>
+		<div class="col-xs-12 col-sm-4">
+			<input id="c-nickname" class="form-control"	name="row[address]" type="text" value="">
+		</div>
+	</div>
+	
+	<div id="avatar_ad">
+		<img width="102" id="img" height="126" src="" border="0">
+	</div>
+	<input name="row[avatar]" id="avatar" type="hidden" value="">
+	</div>
+	<div class="form-group layer-footer">
+		<label class="control-label col-xs-12 col-sm-2"></label>
+		<div class="col-xs-12 col-sm-8">
+			<button type="submit" class="btn btn-success btn-embossed">保存登记信息</button>
+			<button type="button" id="print" class="btn btn-default" style="background-color: #2c3e50; color: white;">打印体检单</button>
+		</div>
+	</div>
+</form>
+
+
+<div id="print_6" style="display:none">
+	<table width="500" style="float: left;">
+		<tr height="40">
+			<td>姓名：<span id="print_name" style="text-decoration: underline; font-size: 12px;">aaaaaaaa</span></td>
+			<td>性别:<span id="print_sex" style="text-decoration: underline; font-size: 12px;">aaaaaaaa</span></td>
+			<td>年龄:<span id="print_age" style="text-decoration: underline; font-size: 12px;">aaaaaaaa</span></td>
+		</tr>
+		<tr height="40">
+			<td>从业类别：<span id="print_employee" style="text-decoration: underline; font-size: 12px;">aaaaaaaa</span></td>
+			<td>体检单位：<span id="print_company" style="text-decoration: underline; font-size: 12px;">aaaaaaaa</span></td>
+		</tr>
+		<tr height="40">
+			<td>身份证号:<span id="print_identitycard style="text-decoration: underline; font-size: 16px;">aaaaaaaa</span></td>
+		</tr>
+	</table>
+</div>
+<div id="print_8" style="display:none">
+	<table class="MsoNormalTable" width="670" style="border-collapse:collapse;border:none;" cellspacing="0"	cellpadding="0" border="1">
+		<tbody>
+			<tr>
+				<td rowspan="2" style="border:solid windowtext 1.0pt;" width="73">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">既往</span></b><b><span style="font-family:宋体;"></span></b>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">病史</span></b><b><span style="font-family:宋体;"></span></b>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="66">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">	
+						<b><span style="font-family:宋体;">病</span></b><b><span style="font-family:宋体;"><span>&nbsp;
+								</span><span>名</span></span></b>
+					</p>
+				</td>
+				<td style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">肝</span></b><b><span style="font-family:宋体;"><span>&nbsp;
+								</span><span>类</span></span></b>
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">痢</span></b><b><span style="font-family:宋体;"><span>&nbsp;
+								</span><span>疾</span></span></b>
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">伤</span></b><b><span style="font-family:宋体;"><span>&nbsp;
+								</span><span>寒</span></span></b>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">肺结核</span></b><b><span style="font-family:宋体;"></span></b>
+					</p>
+				</td>
+				<td style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">皮肤病</span></b><b><span style="font-family:宋体;"></span></b>
+					</p>
+				</td>
+				<td style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<b><span style="font-family:宋体;">其</span></b><b><span style="font-family:宋体;"><span>&nbsp;
+								</span><span>它</span></span></b>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="66">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">患病时间</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td style="border:solid windowtext 1.0pt;" width="71">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="4" style="border:solid windowtext 1.0pt;" width="73">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">体征</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td style="border:solid windowtext 1.0pt;" width="38">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">心</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="230">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="41">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">肝</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="4" style="border:solid windowtext 1.0pt;" width="182">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="border:solid windowtext 1.0pt;" width="38">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">肺</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="230">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="41">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">脾</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="4" style="border:solid windowtext 1.0pt;" width="182">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="border:solid windowtext 1.0pt;" width="38">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">皮肤</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="12" style="border:solid windowtext 1.0pt;" width="454">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">手癣 指甲癣 手部湿疹 银屑</span><span
+							style="font-family:宋体;">(<span>或鳞屑</span>)<span>病 渗出性皮肤病 化脓性皮肤病</span></span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="border:solid windowtext 1.0pt;" width="38">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">其它</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="230">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="77">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">医师签名</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2" style="border:solid windowtext 1.0pt;" width="73">
+					<p class="MsoNormal" style="font-size: 14px;">
+						视力及辨色力<br>（直接接触药品质量检验、验收、养护人员）
+					</p>
+					<p class="MsoNormal">
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="62">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体; padding-left: 10px">视力</span>
+                              <span style="font-family:宋体;"></span>
+					</p>
+
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="102">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">左</span>
+						<span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="104">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="77">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">右</span><span
+							style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="border:solid windowtext 1.0pt;" width="62">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">辨色力</span><span
+							style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="5" style="border:solid windowtext 1.0pt;" width="206">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="77">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">医师签名</span><span
+							style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="border:solid windowtext 1.0pt;" width="73">
+					<p class="MsoNormal" style="text-align:center;" align="center">
+						<span style="font-family:宋体;">摄影检查</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="text-align:center;" align="center">
+						<span style="font-family:宋体;">胸部</span><span style="font-family:宋体;">x<span>射线</span></span>
+					</p>
+				</td>
+				<td colspan="13" style="border:solid windowtext 1.0pt;" width="491">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+					<p class="MsoNormal">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-indent:210.0pt;">
+						<span style="font-family:宋体;">医师签名</span><span style="font-family:宋体;">:</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="7" style="border:solid windowtext 1.0pt;" width="73">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">实 化</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">验 验</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">室 单</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">检 附</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">查 后</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="4" style="border:solid windowtext 1.0pt;" width="137">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">检</span><span style="font-family:宋体;"><span>&nbsp;
+							</span><span>查</span><span>&nbsp; </span><span>项</span><span>&nbsp;
+							</span><span>目</span></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="208">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">单</span><span style="font-family:宋体;"><span>&nbsp;
+							</span><span>位</span><span>&nbsp; </span><span>结</span><span>&nbsp;
+							</span><span>果</span></span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">检验师签名</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2" style="border:solid windowtext 1.0pt;" width="38">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">大便</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">培养</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="99">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">痢疾杆菌</span><span
+							style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="208">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" rowspan="2" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="99">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">伤寒或副伤寒</span><span
+							style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="208">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="3" style="border:solid windowtext 1.0pt;" width="38">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">肝</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">功</span><span style="font-family:宋体;"></span>
+					</p>
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">能</span><span style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="99">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">谷丙转氨酶</span><span
+							style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="208">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="99">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">HAV-IgM </span><sup><span
+								style="font-size:14.0pt;font-family:宋体;">*</span></sup><sup><span
+								style="font-family:宋体;"></span></sup>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="208">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="99">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">HEV-IgM </span><sup><span
+								style="font-size:14.0pt;font-family:宋体;">*</span></sup><sup><span
+								style="font-family:宋体;"></span></sup>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="208">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" style="border:solid windowtext 1.0pt;" width="137">
+					<p class="MsoNormal" style="margin-left:-2.4pt;">
+						<span style="font-family:宋体;padding-left: 10px">其它</span><span
+							style="font-family:宋体;"></span>
+					</p>
+				</td>
+				<td colspan="6" style="border:solid windowtext 1.0pt;" width="208">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+				<td colspan="3" style="border:solid windowtext 1.0pt;" width="147">
+					<p class="MsoNormal" style="margin-left:-2.4pt;text-align:center;" align="center">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="14" style="border:solid windowtext 1.0pt;" width="565" valign="top">
+					<p class="MsoNormal" style="margin-left:.85pt;text-indent:5.25pt;">
+						<span style="font-family:宋体;">检查结论</span><span style="font-family:宋体;">:</span>
+					</p>
+					<p class="MsoNormal" style="margin-left:.85pt;">
+						<span style="font-family:宋体;">&nbsp;</span>
+					</p>
+					<p class="MsoNormal" style="margin-left:.85pt;text-indent:194.25pt;">
+						<span style="font-family:宋体;">主检医师签名</span>
+						<span style="font-family:宋体;">:
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span>(公章)</span>
+						</span>
+					</p>
+					<p class="MsoNormal" style="margin-left:111.7pt;">
+						<span style="font-family:宋体;">
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span>年</span><span>&nbsp;&nbsp;
+							</span><span>月</span><span>&nbsp;&nbsp;</span><span>日</span>
+						</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="14" style="border-bottom:none; border-left: none;border-right: none;" width="565"
+					valign="middle">
+					<span
+						style="padding-left:10px;font-size:14.0pt;font-family:仿宋_GB2312; color: red; height: 60px; display: inline-block; line-height:60px">
+						*说明：发现谷丙转氨酶异常的，加做
+						<span style="font-size:14.0pt;font-family:宋体;">HAV-IgM、HEV-IgM两个指标。</span>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+
+
+
+
+
+
+
+<script for=idcard event="Readed()">
+	alert("Readed--------");
+/* 	document.getElementById("avatar").value = rdcard.JPGBuffer;
+	document.getElementById("img").setAttribute("src", data:image/jpeg;base64,"+rdcard.JPGBuffer);
+	document.getElementById("identitycard").value = rdcard.CardNo;
+	//document.getElementById("c-username").value = rdcard.NameL;
+	//document.getElementById("c-sex").value = rdcard. Sex;
+	var age = jsGetAge(rdcard.Born);
+	document.getElementById("c-age").value = age; */
+</script>
+
+<script for=idcard event="Closed()">
+        //window.close();
+</script>
+
+<script for=idcard event="Opened()">
+        //window.close();
+</script>
+<script language="javascript" src="http://www.card.com/LodopFuncs.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+        var pp1;
+        /* pp1 = rdcard.openport();
+        setTimeout(st, 3000, true); */
+		$("#express").hide();
+		
+		$("#identitycard").blur(function(){
+			$("#identitycard").blur(function () {   
+	            //1305231989010203         
+	            var card = $("#identitycard").val();
+	            var birthday = card.substring(6, 14);
+	            var age = jsGetAge(birthday);
+	            $("#c-age").val(age);
+	        })
+		})
+		
+		
+		
+		$("#pid-s").change(function() {
+			var ids = $("#pid-s option:selected").val();
+			if (ids) {
+				$.ajax({
+					url : "common/getEmployee",
+					data : {
+						'id' : ids
+					},
+					type : "get",
+					dataType : "json",
+					async : true,
+					success : function(obj) {
+						var html = "";
+						for (var i = 0; i < obj.length; i++) {
+							html += "<option value="+obj[i]['id']+" >"
+									+ obj[i].name
+									+ "</option>";
+						}
+						$("#names").html(html);
+					},
+					error : function(msg) {
+					}
+				})
+			}
+		});
+		$("#express-1").click(function(){
+			$("#express").show();
+		});
+		$("#express-1").click(function(){
+			$("#express").show();
+		});		
+		
+		$("#print").click(function () {
+			setTimeout("print()",500);//延时3秒 
+		})	
+		//$("#print").trigger("click");
+
+
+	});
+	function print() {
+		LODOP = getLodop();
+		LODOP.PRINT_INITA(9, 0, 794, 1122, "打印控件功能演示_Lodop功能_在线编辑获得程序代码");
+		LODOP.SET_PRINT_MODE("PRINT_NOCOLLATE", 1);
+		LODOP.ADD_PRINT_TEXT(43, 150, 465, 45, "河北省食品药品从业人员健康检查表");
+		LODOP.SET_PRINT_STYLEA(0, "FontName", "黑体");
+		LODOP.SET_PRINT_STYLEA(0, "FontSize", 20);
+		LODOP.SET_PRINT_STYLEA(0, "Alignment", 2);
+		LODOP.ADD_PRINT_SHAPE(4, 150, 46, 702, 2, 0, 1, "#000000");
+		LODOP.ADD_PRINT_TEXT(122, 50, 79, 26, "体检日期: ");
+		LODOP.SET_PRINT_STYLEA(0, "FontSize", 11);
+		LODOP.ADD_PRINT_TEXT(122, 537, 57, 26, "编号：");
+		LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+		LODOP.ADD_PRINT_TEXT(122, 140, 170, 26, "2019 年 12 月 23 日");
+		LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+		LODOP.ADD_PRINT_HTM(160, 50, 465, 126, document.getElementById("print_6").innerHTML);
+		LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img src=\"https://s.cn.bing.net/th?id=ODL.9e05e5966ac2c0e81bd7a7d5b2bd29ec&w=146&h=146&c=7&rs=1&qlt=80&pid=RichNav\"/>");
+		LODOP.SET_PRINT_STYLEA(0, "TransColor", "#0F0100");
+		LODOP.ADD_PRINT_TABLE(290, 56, 680, 760, document.getElementById("print_8").innerHTML);
+		LODOP.PREVIEW();
+	}
+	//js读取身份证信息		
+    function st() {
+        pp = rdcard.ReadCard2();
+        alert(pp);
+    }
+	
+    function jsGetAge(strBirthday){       
+        var returnAge;
+        var birthYear = strBirthday.substring(0, 4);
+        var birthMonth = strBirthday.substring(4, 6);
+        var birthDay = strBirthday.substring(6, 8);
+        
+        d = new Date();
+        var nowYear = d.getFullYear();
+        var nowMonth = d.getMonth() + 1;
+        var nowDay = d.getDate();
+        
+        if(nowYear == birthYear){
+            returnAge = 0;//同年 则为0岁
+        }
+        else{
+            var ageDiff = nowYear - birthYear ; //年之差
+            if(ageDiff > 0){
+                if(nowMonth == birthMonth) {
+                    var dayDiff = nowDay - birthDay;//日之差
+                    if(dayDiff < 0)
+                    {
+                        returnAge = ageDiff - 1;
+                    }
+                    else
+                    {
+                        returnAge = ageDiff ;
+                    }
+                }
+                else
+                {
+                    var monthDiff = nowMonth - birthMonth;//月之差
+                    if(monthDiff < 0)
+                    {
+                        returnAge = ageDiff - 1;
+                    }
+                    else
+                    {
+                        returnAge = ageDiff ;
+                    }
+                }
+            }
+            else
+            {
+                returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+            }
+        }
+        
+        return returnAge;//返回周岁年龄
+        
+    }
+	
+	
+</script>
+<style>
+#avatar_ad {
+	border: 1px solid #000;
+	width: 150px;
+	height: 200px;
+	position: absolute;
+	top: 27%;
+	right: 20%;
+}
+</style>

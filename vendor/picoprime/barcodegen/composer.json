@@ -1,0 +1,35 @@
+{
+    "name": "picoprime/barcodegen",
+    "description": "Generates barcodes images as PNG or DATA-URL",
+    "keywords": [
+        "barcode", "barcodes", "generator", 
+        "generate", "picoprime", "pico",
+        "prime", "data-url", "png", "image"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rafal Wojenkowski",
+            "email": "rafal@picoprime.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "intervention/image": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "PicoPrime\\BarcodeGen\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PicoPrime\\BarcodeGen\\BarcodeGenServiceProvider"
+            ],
+            "aliases": {
+                "Debugbar": "Barryvdh\\Debugbar\\Facade"
+            }
+        }
+    }
+}

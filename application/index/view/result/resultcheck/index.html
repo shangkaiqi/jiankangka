@@ -1,0 +1,169 @@
+<div class="panel panel-default panel-intro" style="width: 1000px;">
+	<h3>结果录入</h3>
+	<div class="panel-body" style="position: relative; min-height: 400px">
+		<form id="edit-form" class="form-horizontal" role="form"
+			data-toggle="validator" method="POST" action="">
+			<div class="form-group"
+				style="border-bottom: 1px solid #eee; padding: 10px 0">
+				<label for="c-nickname" class="control-label col-xs-12 col-sm-2"
+					style="margin-left: -65px;">快速检索:</label>
+				<div class="form-inline" data-toggle="cxselect"
+					data-selects="pid,name">
+					<input id="search-a" class="form-control" name="row[search]" placeholder="请输入12位编号"
+						type="text" value="" style="width: 400px;">
+					<button type="submit" class="btn btn-success btn-embossed">查询</button>
+				</div>
+			</div>
+		</form>
+		<div
+			style="border-bottom: 1px solid #eee; height: 215px; background-color: #eee; padding: 10px">
+			<div class="form-group width-1">
+				<div class="context-b">
+					<i class="form-name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</i><span class="form-controller width-2"></span>
+				</div>
+				<div class="context-b">
+					<i class="form-name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</i><span class="form-controller width-3"></span>
+				</div>
+				<div class="context-b">
+					<i class="form-name" style="margin-left:42px;">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:</i><span class="form-controller width-3"></span>
+				</div>
+			</div>
+
+			<div class="form-group width-1">
+				<div class="context-a">
+					<i class="form-name">身份证号:</i><span class="form-controller width-2"></span>
+				</div>
+				<div class="context-a">
+					<i class="form-name">联系电话:</i><span class="form-controller width-2"></span>
+				</div>
+			</div>
+			<div class="form-group width-1">
+				<div class="context-a">
+					<i class="form-name">登&nbsp;&nbsp;记&nbsp;&nbsp;号:</i><span class="form-controller width-2"></span>
+				</div>
+				<div class="context-a">
+					<i class="form-name">从业类别:</i><span class="form-controller width-2"></span>
+				</div>
+			</div>
+			<div id="avatar_ad"></div>
+		</div>
+		<hr>
+	</div>
+
+</div>
+<style>
+h3 {
+	padding: 15px 10px;
+	border-bottom: 1px solid #ccc;
+	margin: auto;
+	background-color: #eee;
+}
+
+h4 {
+	height: 30px;
+	background-color: #ccc;
+	vertical-align: middle;
+	margin: 0;
+	line-height: 30px;
+	padding-left: 10px;
+}
+
+#avatar_ad {
+	border: 1px solid #000;
+	width: 120px;
+	height: 160px;
+	position: absolute;
+	top: 100px;
+	right: 100px;
+}
+
+.width-1 {
+	width: 560px;
+}
+
+.width-2 {
+	width: 210px;
+}
+
+.width-3 {
+	width: 50px;
+}
+
+.width-4 {
+	width: 100px;
+	line-height: 31px;
+	text-align: right;
+}
+
+.form-group {
+	padding: 2px 0;
+	margin: 10px 0;
+}
+
+.form-controller {
+	border-radius: 0;
+	box-shadow: none;
+	border-color: #d2d6de;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	display: inline-block;
+	height: 31px;
+	padding: 6px 12px;
+	font-size: 12px;
+	line-height: 1.42857143;
+	color: #555555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border-color ease-in-out .15s, box-shadow
+		ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
+		.15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-name {
+	height: 31px;
+	font-style: normal;
+	display: inline-block;
+	vertical-align: middle;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	font-size: 14px;
+}
+
+.context-b {
+	display: inline-block;
+	/*margin-right:10px;*/
+}
+
+.context-a {
+	display: inline-block;
+	margin-right: 2px;
+}
+
+.result {
+	
+}
+
+.result-a {
+	float: left;
+	width: 485px;
+}
+
+.result-blood {
+	border: 1px solid #eee;
+	width: 95%;
+	margin: 10px auto;
+}
+
+.clean {
+	clean: both;
+	margin: 0;
+	padding: 0;
+}
+</style>

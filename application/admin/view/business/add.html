@@ -1,0 +1,143 @@
+<form id="add-form" class="form-horizontal" role="form"
+	data-toggle="validator" method="POST" action="">
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Busisessname')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-busisessname" class="form-control"
+				name="row[busisessname]" data-rule="required;busisessname" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Phone')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-phone" class="form-control" name="row[phone]"
+				type="text" data-rule="required">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Email')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-email" class="form-control" name="row[email]"
+				type="text" data-rule="required;email">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="c-avatar" class="control-label col-xs-12 col-sm-2">医院印章:</label>
+		<div class="col-xs-12 col-sm-8">
+			<div class="input-group">
+				<input id="c-avatar" data-rule="" class="form-control" size="50"
+					name="row[avatar]" type="text" value="">
+				<div class="input-group-addon no-border no-padding">
+					<span><button type="button" id="plupload-avatar"
+							class="btn btn-danger plupload" data-input-id="c-avatar"
+							data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp"
+							data-multiple="false" data-preview-id="p-avatar">
+							<i class="fa fa-upload"></i> 上传
+						</button></span> <span><button type="button" id="fachoose-avatar"
+							class="btn btn-primary fachoose" data-input-id="c-avatar"
+							data-mimetype="image/*" data-multiple="false">
+							<i class="fa fa-list"></i> 选择
+						</button></span>
+				</div>
+				<span class="msg-box n-right" for="c-avatar"></span>
+			</div>
+			<ul class="row list-inline plupload-preview" id="p-avatar"></ul>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Physical_num')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-physical_num" class="form-control"
+				name="row[physical_num]"  data-rule="required" type="number">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Connect')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-connect" class="form-control"
+				name="row[connect]"  data-rule="required" type="text">
+		</div>
+	</div>
+<!-- 	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Profession')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-profession" class="form-control" name="row[profession]"
+				type="text">
+		</div>
+	</div> -->
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Area')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<div class="form-inline" data-toggle="cxselect"
+				data-selects="province,city,area">
+				<select class="province form-control" name="row[province]"
+					data-url="ajax/area"></select> <select class="city form-control"
+					name="row[city]" data-url="ajax/area"></select> <select
+					class="area form-control" name="row[county]" data-url="ajax/area"></select>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Address')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-address" class="form-control" data-rule="required" name="row[address]"
+				type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('Charge')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<input id="c-charge" class="form-control" data-rule="required" name="row[charge]"
+				type="number">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="password" class="control-label col-xs-12 col-sm-2">{:__('打卡打印机')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<select class="province form-control" id='card' name="row[printcard]"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="password" class="control-label col-xs-12 col-sm-2">{:__('体检单打印机')}:</label>
+		<div class="col-xs-12 col-sm-8">
+			<select class="province form-control" id='form' name="row[printform]"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-xs-12 col-sm-2">{:__('打印体检表')}:</label>
+		<div class="col-xs-12 col-sm-8">{:build_radios('row[isprint]',
+			['1'=>__('yes'), '0'=>__('no')],'0')}</div>
+	</div>
+	<div class="form-group layer-footer">
+		<label class="control-label col-xs-12 col-sm-2"></label>
+		<div class="col-xs-12 col-sm-8">
+			<button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+			<button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+		</div>
+	</div>
+</form>
+<script language="javascript" src="/LodopFuncs.js"></script>
+<script>
+	$(document).ready(function() {
+		setTimeout("print()", 500);//延时3秒
+	})
+	function print() {
+		LODOP = getLodop();
+		var printount = LODOP.GET_PRINTER_COUNT();
+		for (var i = 0; i < printount; i++) {
+			var option = document.createElement("option");
+			option.innerHTML = LODOP.GET_PRINTER_NAME(i);
+			option.value = i + '-' + LODOP.GET_PRINTER_NAME(i);
+			document.getElementById("card").appendChild(option);
+		}
+		for (var i = 0; i < printount; i++) {
+			var option = document.createElement("option");
+			option.innerHTML = LODOP.GET_PRINTER_NAME(i);
+			option.value = i + '-' + LODOP.GET_PRINTER_NAME(i);
+			document.getElementById("form").appendChild(option);
+		}
+	}
+</script>

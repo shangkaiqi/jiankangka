@@ -1,0 +1,88 @@
+<div class="panel panel-default panel-intro">
+	{:build_heading()}
+
+	<div class="panel-body">
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade active in" id="one">
+				<div class="widget-body no-padding">
+					<div id="toolbar" class="toolbar">
+						{:build_toolbar('refresh')}
+						<!-- <a href="javascript:;" data-name="withdraw" class="btn btn-default btn-selected btn-disabled"
+							style="font-size: 14px; color: white; background: #18bc9c;">
+							<span class="extend"> 打印体检表</span> </span>
+						</a> -->
+						<!--  <div class="dropdown btn-group {:$auth->check('user/user/multi')?'':'hide'}">
+                            <a class="btn btn-primary btn-more dropdown-toggle btn-disabled disabled" data-toggle="dropdown"><i class="fa fa-cog"></i> {:__('More')}</a>
+                            <ul class="dropdown-menu text-left" role="menu">
+                                <li><a class="btn btn-link btn-multi btn-disabled disabled" href="javascript:;" data-params="status=normal"><i class="fa fa-eye"></i> {:__('Set to normal')}</a></li>
+                                <li><a class="btn btn-link btn-multi btn-disabled disabled" href="javascript:;" data-params="status=hidden"><i class="fa fa-eye-slash"></i> {:__('Set to hidden')}</a></li>
+                            </ul>
+                        </div> -->
+					</div>
+					<table id="table"
+						class="table table-striped table-bordered table-hover"
+						data-operate-add="{:$auth->check('physical/register/add')}"
+						width="100%">
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	//点击事件
+	$(document).ready(function() {
+		$("#clickme").click(function() {aaaa")
+		});
+
+	$("#clickme").trigger('click')
+//-->
+</script>
+<style>
+.btn {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 12px;
+	line-height: 1.42857143;
+	border-radius: 3px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.btn-xs, .btn-group-xs>.btn {
+	padding: 3px 7px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 2px;
+}
+
+.btn {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+	color: #fff;
+	background-color: #18bc9c;
+	border-color: #18bc9c;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: #18bc9c;
+}
+</style>

@@ -1,0 +1,1 @@
+SELECT `id`,`name`,`value` FROM `fa_inspect`SELECT `id`,`name`,`value` FROM `fa_inspect`
