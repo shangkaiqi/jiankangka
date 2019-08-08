@@ -24,16 +24,17 @@ class Common extends Frontend
         parent::_initialize();
         $this->orderde = model("OrderDetail");
     }
+
     /**
      * 更新打印健康证时间
      */
-    public function updatePrint(){
+    public function updatePrint()
+    {
         $params = $this->request->post('order_num');
         $date['employ_num_time'] = time();
-        $where['obs_id']= $this->busId;
-        $where['order_serial_number']= $params;
-        db('order')->where($where)->update($date);        
-        
+        $where['obs_id'] = $this->busId;
+        $where['order_serial_number'] = $params;
+        db('order')->where($where)->update($date);
     }
 
     public function getInspece($parent)
@@ -64,7 +65,7 @@ class Common extends Frontend
      * @param string $type
      * @return array
      */
-    public function inspect($type = '', $orderId='')
+    public function inspect($type = '', $orderId = '')
     {
         $where = array();
         $inspect = array();
@@ -239,13 +240,13 @@ class Common extends Frontend
         for ($i = 0; $i < count($params['frist']); $i ++) {
             $arr = explode("-", $params['frist'][$i]);
             if ($arr[0] == 0) {
-                if($type == 9){                    
+                if ($type == 9) {
                     $where = [
                         'order_serial_number' => $params["order_serial_number"],
                         'item' => $arr[1],
                         'odbs_id' => $this->busId
                     ];
-                }else{                
+                } else {
                     $where = [
                         'physical' => $type,
                         'order_serial_number' => $params["order_serial_number"],
@@ -267,14 +268,14 @@ class Common extends Frontend
                 $res = $params['result'][$i];
                 $sql = "select id,name from fa_inspect where
                                     id=(select parent from fa_inspect where id = $res)  limit 1";
-                $ins = db()->query($sql);                
-                if($type == 9){
+                $ins = db()->query($sql);
+                if ($type == 9) {
                     $where = [
                         'order_serial_number' => $params["order_serial_number"],
                         'item' => $arr[1],
                         'odbs_id' => $this->busId
                     ];
-                }else{
+                } else {
                     $where = [
                         'physical' => $type,
                         'order_serial_number' => $params["order_serial_number"],
@@ -444,11 +445,9 @@ class Common extends Frontend
     public function muilts($users, $type)
     {
         // 根据用户查询属于哪个医院
-        // $medicine = db("admin")->alias("a")
-        // ->join("business b", "b.bs_id=a.businessid")
-        // ->field("bs_uuid")
-        // ->where("id", "=", $this->auth->id)
-        // ->find();
+        $medicine = db("admin")->field("nickname")
+            ->where("id", "=", $this->auth->id)
+            ->find();
         // 获取用户对应的订单编号
         $order_num = db("physical_users")->field("order_serial_number")
             ->where("id", "in", $users)
@@ -456,13 +455,19 @@ class Common extends Frontend
         $i = 0;
         foreach ($order_num as $order) {
             $where['order_serial_number'] = $order['order_serial_number'];
+            $where['physical'] = $type;
+            $where['odbs_id'] = $this->busId;
             $data['physical_result'] = 0;
+            $data['physical_result_ext'] = 0;
+            $data['doctor'] = $medicine['nickname'];
             $result = db("order_detail")->where($where)->update($data);
+
+            $this->check_resultstatus($order['order_serial_number']);
             if (! $result) {
                 $i ++;
             }
         }
-        if ($result == 0) {
+        if ($i == 0) {
             return true;
         } else
             return false;
