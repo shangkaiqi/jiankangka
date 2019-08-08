@@ -152,9 +152,12 @@ class Frontend extends Controller
                     ]);
                     exit();
                 }
-                $this->error(__('Please login first'), url('index/login', [
-                    'url' => $url
-                ]));
+                // $this->error(__('Please login first'), url('index/login', [
+                // 'url' => $url
+                // ]));
+                $this->redirect('index/login', [], 302, [
+                    'referer' => $url
+                ]);
             }
             // 判断是否需要验证权限
             if (! $this->auth->match($this->noNeedRight)) {
@@ -228,8 +231,10 @@ class Frontend extends Controller
         Config::set('upload', array_merge(Config::get('upload'), $upload));
 
         // 获取医院信息
-        
-        $bussiness = db("admin")->field("businessid")->where("id", "=", $this->auth->id)->find();
+
+        $bussiness = db("admin")->field("businessid")
+            ->where("id", "=", $this->auth->id)
+            ->find();
         $this->busId = $bussiness['businessid'];
         // 配置信息后
         Hook::listen("config_init", $config);
