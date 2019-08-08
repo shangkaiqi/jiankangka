@@ -64,7 +64,7 @@ class Bloodresult extends Frontend
                 return $this->selectpage();
             }
             list ($where, $sort, $order, $offset, $limit) = $this->buildparams();
-            
+
             $where1['bs_id'] = $this->busId;
             $where1['is_del'] = 0;
             $total = $this->model->with([
@@ -106,11 +106,11 @@ class Bloodresult extends Frontend
                         $status0 ++;
                     }
                 }
-                if($status == $count){
+                if ($status == $count) {
                     $list[$row]['physical_result'] = 2;
-                }else if($status1){
+                } else if ($status1) {
                     $list[$row]['physical_result'] = 1;
-                }else if($status0 == $count){
+                } else if ($status0 == $count) {
                     $list[$row]['physical_result'] = 0;
                 }
             }
@@ -207,13 +207,13 @@ class Bloodresult extends Frontend
      */
     public function mulit($ids = null)
     {
-        $user = $this->request->get("id");
+        $user = $this->request->post("id");
         $users = explode(",", $user);
         $result = $this->comm->muilts($users, $this->type);
         if ($result) {
-            $this->success('', null);
-        } else {
-            $this->error("批量保存成功");
+            $this->success('保存成功');
+        }else{            
+            $this->success('暂无操作');
         }
     }
 }

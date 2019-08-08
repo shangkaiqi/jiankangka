@@ -168,9 +168,9 @@ class Perspective extends Frontend
         $users = explode(",", $user);
         $result = $this->comm->muilts($users, $this->type);
         if ($result) {
-            $this->success('', null);
-        } else {
-            $this->error("批量保存成功");
+            $this->success('保存成功');
+        }else{
+            $this->success('暂无操作');
         }
     }
 }
