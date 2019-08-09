@@ -362,11 +362,11 @@ class Register extends Frontend
         LODOP.ADD_PRINT_TEXT(170, 350, 60, 26, "{$print['age']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
 
-        LODOP.ADD_PRINT_TEXT(170, 400, 80, 26, "从业类别:");
+        LODOP.ADD_PRINT_TEXT(170, 400, 102, 26, "从业类别:");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
         LODOP.ADD_PRINT_TEXT(170, 480, 80, 26, "{$print['employee']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-        LODOP.ADD_PRINT_TEXT(210, 320, 80, 26, "从业单位:");
+        LODOP.ADD_PRINT_TEXT(210, 320, 102, 26, "从业单位:");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
         LODOP.ADD_PRINT_TEXT(210, 400, 200, 26, "{$print['company']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
@@ -376,39 +376,39 @@ class Register extends Frontend
         LODOP.ADD_PRINT_TEXT(210, 150, 180, 26, "{$print['identitycard']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
 
-
-        LODOP.ADD_PRINT_TEXT(1030, 70, 80, 26, "姓名:");
+        
+        LODOP.ADD_PRINT_TEXT(1000, 70, 80, 26, "姓名:");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-        LODOP.ADD_PRINT_TEXT(1030, 120, 200, 26, "{$print['name']}");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-
-        LODOP.ADD_PRINT_TEXT(1030, 280, 100, 26, "身份证号:");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-        LODOP.ADD_PRINT_TEXT(1030, 370, 200, 26, "{$print['identitycard']}");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-        LODOP.ADD_PRINT_TEXT(1030, 200, 80, 26, "性别:");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-        LODOP.ADD_PRINT_TEXT(1030, 240, 200, 26, "{$print['sex']}");
+        LODOP.ADD_PRINT_TEXT(1000, 120, 200, 26, "{$print['name']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
 
-        LODOP.ADD_PRINT_TEXT(1060, 70, 79, 26, "体检日期: ");
+        LODOP.ADD_PRINT_TEXT(1000, 280, 100, 26, "身份证号:");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+        LODOP.ADD_PRINT_TEXT(1000, 370, 200, 26, "{$print['identitycard']}");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+        LODOP.ADD_PRINT_TEXT(1000, 200, 80, 26, "性别:");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+        LODOP.ADD_PRINT_TEXT(1000, 240, 200, 26, "{$print['sex']}");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+
+        LODOP.ADD_PRINT_TEXT(1030, 70, 102, 26, "体检日期: ");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 11);
-        LODOP.ADD_PRINT_TEXT(1060, 140, 170, 26, "{$print['time']}");
+        LODOP.ADD_PRINT_TEXT(1030, 140, 170, 26, "{$print['time']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-        LODOP.ADD_PRINT_TEXT(1060, 280, 170, 26, "体检编号：");
+        LODOP.ADD_PRINT_TEXT(1030, 280, 170, 26, "体检编号：");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
-        LODOP.ADD_PRINT_TEXT(1060, 370, 160, 26, "{$print['order_serial_number']}");
+        LODOP.ADD_PRINT_TEXT(1030, 370, 160, 26, "{$print['order_serial_number']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
 
         LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img src=\"data:image/jpeg;base64,{$print['images']}\"/>");
         LODOP.SET_PRINT_STYLEA(0, "TransColor", "#0F0100");
         LODOP.ADD_PRINT_TABLE(290, 56, 680, 760, document.getElementById("print_8").innerHTML);
         
-        LODOP.ADD_PRINT_TEXT(1000, 300, 465, 45, "从业人员健康回执单");
+        LODOP.ADD_PRINT_TEXT(960, 300, 465, 45, "从业人员健康回执单");
         LODOP.SET_PRINT_STYLEA(0, "FontName", "黑体");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
 
-        LODOP.ADD_PRINT_IMAGE(1020, 580, 200, 126, "<img src=\"http://39.100.89.92:8082/barcodegen/html/image.php?filetype=PNG&dpi=85&scale=1&rotation=0&font_family=Arial.ttf&font_size=8&text={$print['order_serial_number']}&thickness=55&start=A&code=BCGcode128\">");
+        LODOP.ADD_PRINT_IMAGE(990, 580, 200, 126, "<img src=\"http://39.100.89.92:8082/barcodegen/html/image.php?filetype=PNG&dpi=85&scale=1&rotation=0&font_family=Arial.ttf&font_size=11&text={$print['order_serial_number']}&thickness=55&start=A&code=BCGcode128\">");
 EOF;
         return $lodop;
     }
@@ -837,38 +837,29 @@ EOF;
         					</tr>
         					<tr>
         						<td colspan="14" style="border:solid windowtext 1.0pt;" width="565" valign="top">
-        							<p class="MsoNormal" style="margin-left:.85pt;text-indent:5.25pt;">
-        								<span style="font-family:宋体;">检查结论</span><span style="font-family:宋体;">:</span>
-        							</p>
-        							<p class="MsoNormal" style="margin-left:.85pt;">
-        								<span style="font-family:宋体;">&nbsp;</span>
-        							</p>
-        							<p class="MsoNormal" style="margin-left:.85pt;text-indent:194.25pt;">
-        								<span style="font-family:宋体;">主检医师签名</span>
-        								<span style="font-family:宋体;">:
-        									<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        									<span>(公章)</span>
-        								</span>
-        							</p>
-        							<p class="MsoNormal" style="margin-left:111.7pt;">
-        								<span style="font-family:宋体;">
-        									<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        									<span>年</span><span>&nbsp;&nbsp;
-        									</span><span>月</span><span>&nbsp;&nbsp;</span><span>日</span>
-        								</span>
+        							<p style="height:30px;">检查结论:</p>
+        							<p style="height:20px;">
+        								    主检医师签名(公章):
+        									<span style="display:inline-block;width:120px;height:20px;float:right;">
+        									年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        									月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        									日</span>
         							</p>
         						</td>
         					</tr>
         					<tr>
-        						<td colspan="14" style="border-bottom:none; border-left: none;border-right: none;" width="565"
+        						<td colspan="14" style="border-bottom:none; border-left: none;border-right: none;" width="565" 
         							valign="middle">
         							<span style="padding-left:10px;font-size:12.0pt;font-family:仿宋_GB2312; color: red; height: 40px; display: inline-block; line-height:40px">
         								*说明：发现谷丙转氨酶异常的，加做
         								<span style="font-size:12.0pt;font-family:宋体;">HAV-IgM、HEV-IgM两个指标。</span>
         							</span>
+        							<p style="border:1px dashed #000000;border-bottom:none;border-left: none;border-right: none;">
+        							
+        							</p>
         						</td>
-        							<div style="border-bottom:1px solid #000000;cellspacing="0" cellpadding="0""></div>
         					</tr>
+        
         				</tbody>
         			</table>
         		</div>

@@ -136,11 +136,13 @@ define([ 'jquery', 'bootstrap', 'backend', 'table', 'form' ], function($,
 						type: 'GET',
 						url: "result/bodyresult/mulit",
 						data: {'id':basic},
-					}, function (data, ret) {
+					},  function (data, ret) {
 						//成功的回调
+						table.bootstrapTable('refresh');
 						return ret.msg;
 					}, function (data, ret) {
-						return false;
+						table.bootstrapTable('refresh');
+						return ret.msg;
 				});
 			});
 		},

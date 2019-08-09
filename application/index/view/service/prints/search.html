@@ -87,11 +87,16 @@
 			alert("打印卡数量不足");
 			return false;
 		}
-		//1公共卫生2食药安全
-		if({$print['physictype']} == 1){
-			CreatePrintPage();
+		// //1公共卫生2食药安全
+		// if({$print['physictype']} == 1){
+		// 	CreatePrintPage();
+		// }else{
+		// 	CreatePrintPage1();
+		// }
+		if({$print['physictype']}){
+            CreatePrintPage();
 		}else{
-			CreatePrintPage1();
+            CreatePrintPage1();
 		}
 
 		if (LODOP.SET_PRINTER_INDEX({$print['print_card_id']})){
@@ -139,6 +144,87 @@
         LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 8);
     };
+/**
+ * 工牌正面
+ * */
+    function gongpai1() {
+        LODOP = getLodop();
+        LODOP.PRINT_INITA("0", "0", "86.6mm", "56.4mm", "打印控件功能演示_Lodop功能_在线编辑获得程序代码");
+        LODOP.ADD_PRINT_SETUP_BKIMG("C:\\Users\\Shilh\\Desktop\\QQ截图20190702132927.png");
+    	LODOP.ADD_PRINT_TEXT("55mm", "14mm", "100", "30", "姓名:");//姓名
+    	LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+    	LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+    	LODOP.ADD_PRINT_LINE("60mm","26mm","60mm","48mm",0,1);
+
+    	LODOP.ADD_PRINT_TEXT("55mm", "26mm", "100", "30", "商凯棋");//姓名
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+
+        LODOP.ADD_PRINT_TEXT("62mm", "14mm", "100", "30", "职务:");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+    	LODOP.ADD_PRINT_LINE("66mm","26mm","66mm","48mm",0,1);
+
+		LODOP.ADD_PRINT_TEXT("62mm", "26mm", "100", "30", "PHP");
+		LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+		LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+
+        LODOP.ADD_PRINT_TEXT("69mm", "14mm", "60mm", "30", "部门:");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+    	LODOP.ADD_PRINT_LINE("74mm","26mm","74mm","48mm",0,1);
+
+		LODOP.ADD_PRINT_TEXT("69mm", "26mm", "60mm", "30", "软件信息部");
+		LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+		LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+
+        LODOP.ADD_PRINT_TEXT("76mm", "14mm", "100", "30", "编号:");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+    	LODOP.ADD_PRINT_LINE("80mm","26mm","80mm","48mm",0,1);
+
+		LODOP.ADD_PRINT_TEXT("76mm", "26mm", "100", "30", "33");
+		LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+		LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+
+        LODOP.ADD_PRINT_IMAGE("25mm","18mm","40mm","40mm","<img style=\"position:absolute;left:1px;top:1px;\" height='95' width='80' src=\"data:image/jpeg;base64,{$print['images']}\"/>");
+    };
+	/**
+     * 工牌反面
+     * */
+    function gongpai2() {
+        LODOP = getLodop();
+        LODOP.PRINT_INITA("0", "0", "86.6mm", "56.4mm", "打印控件功能演示_Lodop功能_在线编辑获得程序代码");
+        LODOP.ADD_PRINT_TEXT("28mm", "14mm", "150", "30", "工作证");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 28);
+
+        LODOP.ADD_PRINT_TEXT("43mm", "3mm", "150", "30", "工作证使用须知");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 10);
+
+        LODOP.ADD_PRINT_TEXT("50mm", "3mm", "185", "30", "1、本工作证只限于公司在职人员使用、转借、涂改无效。");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 7);
+
+        LODOP.ADD_PRINT_TEXT("58mm", "3mm", "185", "30", "2、进入公司任何区域均需正确佩戴本证。");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 7);
+
+        LODOP.ADD_PRINT_TEXT("62mm", "3mm", "185", "30", "3、员工离职、请将本证交回人事部。");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 7);
+
+        LODOP.ADD_PRINT_TEXT("66mm", "3mm", "185", "30", "4、如有损坏或遗失、请及时到人事部补办。");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 7);
+
+        LODOP.ADD_PRINT_TEXT("74mm", "3mm", "185", "30", "5、如拾获本证、请交回本公司。");
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 7);
+
+    };
+
     function CreatePrintPage1() {	
         LODOP = getLodop();
         LODOP.PRINT_INITA(0, 0, "86.6mm", "56mm", "打印控件功能演示_Lodop功能_在线编辑获得程序代码");
