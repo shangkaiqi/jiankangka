@@ -108,7 +108,9 @@ define(
 						// },
 						} ] ]
 					});
-
+				/**
+				 * 打印体检表
+				 * */
 					// 为表格绑定事件
 					Table.api.bindevent(table);
 					// 获取选中项
@@ -124,11 +126,36 @@ define(
 											str += rows[i]['id'] + ",";
 										}
 										basic = str.substr(0, str.length - 1);
-										Layer.alert(basic);
 										window.location.href = "/index/register/physical_table?id="
 												+ basic;
 
 									});
+					/**
+					*
+					* 打印条形码
+					* */
+
+                    // 获取选中项
+                    $(document)
+                        .on(
+                            "click",
+                            ".barcode",
+                            function() {
+                                var rows = table
+                                    .bootstrapTable('getSelections');
+                                var str = '';
+                                for (var i = 0; i < rows.length; i++) {
+                                    str += rows[i]['id'] + ",";
+                                }
+                                basic = str.substr(0, str.length - 1);
+                                Layer.alert(basic);
+                                window.location.href = "/index/register/barcode?id="
+                                    + basic;
+
+                            });
+
+
+
 
 				},
 				add : function() {

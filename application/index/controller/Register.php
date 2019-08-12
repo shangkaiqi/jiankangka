@@ -283,6 +283,7 @@ class Register extends Frontend
         Db::commit();
         $this->success("删除成功");
     }
+
 /**
  * 批量打印体检单
  * 
@@ -1436,4 +1437,62 @@ EOF;
         }
         return $result;
     }
+
+/**
+ * 打印条形码
+ * */
+    public function barCode()
+    {
+        $params = $this->request->get('id');
+        $print = $this->getPrint($params);
+        $printArr = array();
+        foreach ($print as $row){
+            $row['sex'] = $row['sex'] == 0?"男":"女";
+            $printArr[] = $this->lodopJs1($row);
+        }
+        $str = '';
+        foreach ($printArr as $row) {
+            $str .= $row;
+        }
+        // 获取体检单位
+        $bs_id = db("admin")->alias("a")
+            ->field("b.print_form_id")
+            ->join("business b", "a.businessid = b.bs_id")
+            ->where("id", "=", $this->auth->id)
+            ->find();
+        $print = $bs_id['print_form_id'];
+        echo "<script language=\"javascript\" src=\"/LodopFuncs.js\"></script>
+        <script src=\"https://cdn.bootcss.com/jquery/3.4.1/jquery.js\"></script>
+            <script>
+            $(document).ready(function () {
+                $(\"#prints1\").click(function () {
+                    setTimeout(\"print1()\",500);//延时3秒
+                })
+                $(\"#prints1\").trigger(\"click\");
+            })
+            
+			function print1() {
+                LODOP = getLodop();
+                LODOP.PRINT_INITA(9, 0, 30, 50, \"条形码\");
+                {$str}     
+                LODOP.PREVIEW();
+            }
+            </script>            
+	<button id=\"prints1\">打印文件</button>";
+//	<button id=\"prints1\" style=\"display:none\">打印文件</button>";
+//        $this->success();
+    }
+
+    protected function lodopJs1($print){
+        $lodop = <<<EOF
+        LODOP.NewPage();
+        LODOP.SET_PRINT_MODE("PRINT_NOCOLLATE", 1);
+        LODOP.ADD_PRINT_IMAGE(10, 10, "30mm", "50mm", "<img src=\"http://39.100.89.92:8082/barcodegen/html/image.php?filetype=PNG&dpi=85&scale=1&rotation=0&font_family=Arial.ttf&font_size=11&text={$print['order_serial_number']}&thickness=55&start=A&code=BCGcode128\">");
+EOF;
+        return $lodop;
+    }
+
+
+
+
 }
