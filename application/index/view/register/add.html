@@ -206,21 +206,21 @@
 <script type="text/javascript">
 	var pos = 0, ctx = null, saveCB, image = [];
 	var canvas = document.createElement("canvas");
-	canvas.setAttribute('width', 102);
-	canvas.setAttribute('height', 126);
+	canvas.setAttribute('width', 240);
+	canvas.setAttribute('height', 300);
 
 	if (canvas.toDataURL) {
 
 		ctx = canvas.getContext("2d");
 
-		image = ctx.getImageData(0, 0, 102, 126);
+		image = ctx.getImageData(0, 0,240, 300);
 
 		saveCB = function(data) {
 
 			var col = data.split(";");
 			var img = image;
 
-			for (var i = 0; i < 102; i++) {
+			for (var i = 0; i < 240; i++) {
 				var tmp = parseInt(col[i]);
 				img.data[pos + 0] = (tmp >> 16) & 0xff;
 				img.data[pos + 1] = (tmp >> 8) & 0xff;
@@ -229,7 +229,7 @@
 				pos += 4;
 			}
 
-			if (pos >= 4 * 102 * 126) {
+			if (pos >= 4 * 240 * 300) {
 				ctx.putImageData(img, 0, 0);
 				var str = canvas.toDataURL("image/png");
 				console.log(str);
@@ -264,9 +264,9 @@
 	}
 	$("#webcam").webcam({
 		width :240,
-		height:280,
+		height:300,
 		mode : "callback", //stream,save，回调模式,流模式和保存模式
-		swffile : "/jscam_canvas_only.swf",
+		swffile : "/jscam.swf",
 		onTick : function(remain) {
 			if (0 == remain) {
 				$("#status").text("拍照成功!");
@@ -304,11 +304,11 @@
 }
 
 #avatar_ad1 {
-	width: 240px;
-	height: 280px;
+	width: 160px;
+	height: 120px;
 	position: absolute;
 	top: 42%;
-	right: 7%;
+	right: 22%;
 }
-#webcam{ border: 0px solid #666666; width: auto; height: auto; float: left; }
+#webcam{ border: 1px solid #666666; width: auto; height: auto; float: left; }
 </style>

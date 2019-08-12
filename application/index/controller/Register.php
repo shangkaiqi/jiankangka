@@ -401,7 +401,7 @@ class Register extends Frontend
         LODOP.ADD_PRINT_TEXT(1030, 370, 160, 26, "{$print['order_serial_number']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
 
-        LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img src=\"data:image/jpeg;base64,{$print['images']}\"/>");
+        LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img style=\"width:240px;height:300px;\" src=\"data:image/jpeg;base64,{$print['images']}\"/>");
         LODOP.SET_PRINT_STYLEA(0, "TransColor", "#0F0100");
         LODOP.ADD_PRINT_TABLE(290, 56, 680, 760, document.getElementById("print_8").innerHTML);
         
@@ -954,7 +954,7 @@ EOF;
 
 
 
-        				LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img src=\"data:image/jpeg;base64,{$print['images']}\"/>");
+        				LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img style=\"width:240px;height:300px;\" src=\"data:image/jpeg;base64,{$print['images']}\"/>");
         				LODOP.SET_PRINT_STYLEA(0, "TransColor", "#0F0100");
         				LODOP.ADD_PRINT_TABLE(290, 56, 680, 760, document.getElementById("print_8").innerHTML);
 
