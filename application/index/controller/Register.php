@@ -1478,9 +1478,9 @@ EOF;
                 LODOP.PREVIEW();
             }
             </script>            
-	<button id=\"prints1\">打印文件</button>";
+	<button id=\"prints1\" style=\"display:none\">打印文件</button>";
 //	<button id=\"prints1\" style=\"display:none\">打印文件</button>";
-//        $this->success();
+        $this->success();
     }
 
     protected function lodopJs1($print){
