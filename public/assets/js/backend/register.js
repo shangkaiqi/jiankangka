@@ -47,12 +47,13 @@ define(
 							}
 						}, {
 							field : 'identitycard',
-							title : '身份证'
+							title : '身份证',
+                            placeholder : '请输入要搜索的身份证号'
 						}, {
 							field : 'name',
 							title : "姓名",
 							operate : 'LIKE %...%',
-							placeholder : '模糊搜索，*表示任意字符'
+							placeholder : '请输入要搜索的姓名'
 						}, {
 							field : 'sex',
 							title : "性别",

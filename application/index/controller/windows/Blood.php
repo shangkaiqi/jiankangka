@@ -25,7 +25,7 @@ class Blood extends Frontend
     protected $inspect = null;
 
     protected $type = 0;
-
+    protected $admin = null;
     // 开关权限开启
     protected $noNeedRight = [
         '*'
@@ -41,7 +41,7 @@ class Blood extends Frontend
         $this->user = model("admin");
         $this->inspect = model("Inspect");
         $this->puser = model("PhysicalUsers");
-
+        $this->admin = model("Admin");
 
         $this->view->assign("pid", $comm->getemployee());
     }
@@ -74,6 +74,8 @@ class Blood extends Frontend
                     "user_id" => $user["id"],
                     'physical' => $this->type
                 ];
+                $ins = $this->comm->inspect($this->type,$order_id);
+                $this->view->assign("inspect", $ins);
                 $this->view->assign("wait_physical", $this->comm->wait_physical($user['id']));
                 $this->view->assign("body", $user);
                 return $this->view->fetch("search");
@@ -106,43 +108,60 @@ class Blood extends Frontend
 
     public function save()
     {
-        $params = $this->request->post("rows/a");
-        $username = $this->user->get([
+        $params = $this->request->post();
+        $username = $this->admin->get([
             'id' => $this->auth->id
         ]);
-        $status = 0;
         if ($params) {
-            foreach ($params['phitem'] as $index) {
-                $inspectInfo = $this->inspect->get([
-                    "id" => $index
-                ]);
-                $inspectStatus = $this->inspect->get([
-                    "id" => $inspectInfo['parent']
-                ]);
-                $where = [
-                    'physical' => $this->type,
-                    'order_serial_number' => $params['ordernum'],
-                    'item' => $index,
-                    'bs_id' =>$this->busId
-                ];
-
-                $list = [
-                    "physical_result" => 1,
-                    "status" => 1,
-                    "physical_result" => $inspectStatus['name'],
-                    "physical_result_ext" => $inspectInfo['name'],
-                    "doctor" => $username['nickname']
-                ];
-                $update = $this->orderde->where($where)->update($list);
-                if (! $update) {
-                    $status = 1;
-                }
+            $result = $this->comm->saveOrderDetail($params,$this->type,$username['nickname']);
+            if ($result) {
+                $this->comm->check_resultstatus($params["order_serial_number"]);
+                $this->success('保存成功', "index", '', 1);
+            } else {
+                $this->error('没有变更数据', 'index');
             }
-            if ($status) {
-                $this->success('保存成功', 'index');
-            } else
-                $this->error();
         }
     }
+
+//    public function save()
+//    {
+//        $params = $this->request->post("rows/a");
+//        $username = $this->user->get([
+//            'id' => $this->auth->id
+//        ]);
+//        $status = 0;
+//        if ($params) {
+//            foreach ($params['phitem'] as $index) {
+//                $inspectInfo = $this->inspect->get([
+//                    "id" => $index
+//                ]);
+//                $inspectStatus = $this->inspect->get([
+//                    "id" => $inspectInfo['parent']
+//                ]);
+//                $where = [
+//                    'physical' => $this->type,
+//                    'order_serial_number' => $params['ordernum'],
+//                    'item' => $index,
+//                    'bs_id' =>$this->busId
+//                ];
+//
+//                $list = [
+//                    "physical_result" => 1,
+//                    "status" => 1,
+//                    "physical_result" => $inspectStatus['name'],
+//                    "physical_result_ext" => $inspectInfo['name'],
+//                    "doctor" => $username['nickname']
+//                ];
+//                $update = $this->orderde->where($where)->update($list);
+//                if (! $update) {
+//                    $status = 1;
+//                }
+//            }
+//            if ($status) {
+//                $this->success('保存成功', 'index');
+//            } else
+//                $this->error();
+//        }
+//    }
 
 }

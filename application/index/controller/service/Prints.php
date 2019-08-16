@@ -42,6 +42,7 @@ class Prints extends Frontend
                 $order_id = $params['search'];
                 $where['order_serial_number'] = $order_id;
                 $where['bs_id'] = $this->busId;
+                $where['is_del'] = 0;
                 $uid = db("physical_users")->where($where)->find();
                 if (! $uid) {
                     $this->error("用户不存在");
@@ -57,12 +58,13 @@ class Prints extends Frontend
 
                 $printInfo['name'] = $uid['name'];
                 $printInfo['sex'] = $uid['sex'] == 0 ? "男" : "女";
+                $printInfo['is_print'] = $printInfo['is_print'] == 0?"未打卡":"已打卡";
                 $printInfo['age'] = $uid['age'];
                 $printInfo['employee'] = $uid['employee'];
                 $printInfo['images'] = $uid['images'];
                 $printInfo['company'] = $hosp['busisess_name'];
                 $printInfo['physictype'] = $uid['employee_id']; // 1公共卫生2食药安全
-                $printInfo['identitycard'] = $uid['identitycard']; // 1公共卫生2食药安全
+                $printInfo['identitycard'] = $uid['identitycard']; //身份证号
                 $printInfo['avatar'] = $hosp['avatar'];
                 $printInfo['endtime'] = date('Y-m-d',strtotime('+1year'));
                 $printInfo['time'] = date('Y-m-d',time());
@@ -71,6 +73,16 @@ class Prints extends Frontend
 
                 // 判断打印卡数量是否超过限制量
                 $printInfo['is_out'] = $this->comm->checkcardnumber($hosp['bs_id']);
+                
+                //打卡次数，根据身份证号查询往次打卡信息
+                $countWhere['is_print'] = 1;
+                $countWhere['identitycard'] = $uid['identitycard'];
+                $printCounts = db('order')->where($countWhere)->count();
+                $countsInfo = db('order')->where($countWhere)->order('employ_num_time desc')->select();
+                    
+                $this->view->assign('print_counts',$printCounts);//打卡次数
+                $this->view->assign('counts_info',$countsInfo);//打卡信息
+
 
                 $this->view->assign("print", $printInfo);
                 $checkresult = $this->checkresult($order_id);

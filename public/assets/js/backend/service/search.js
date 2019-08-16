@@ -7,8 +7,7 @@ define(
 					// 初始化表格参数配置
 					Table.api.init({
 						extend : {
-							index_url : 'service/search//index'
-									+ location.search,
+							index_url : 'service/search//index'+ location.search,
 							add_url : 'service/search//add',
 							edit_url : 'service/search//edit',
 							del_url : 'service/search//del',
@@ -92,18 +91,18 @@ define(
 											field : 'company',
 											title : '体检单位',
 											operate : 'LIKE %...%',
-											placeholder : '单位模糊搜索，*表示任意字符'
+											placeholder : '请输入体检单位'
 										},
-										{
-											field : 'order.order_status',
-											title : '体检状态',
-											formatter : Table.api.formatter.label,
-											searchList : {
-												1 : __('已体检'),
-												0 : __('体检中'),
-												2 : __('已出证')
-											}
-										},
+										// {
+										// 	field : 'order.order_status',
+										// 	title : '体检状态',
+										// 	formatter : Table.api.formatter.label,
+										// 	searchList : {
+										// 		1 : __('已体检'),
+										// 		0 : __('体检中'),
+										// 		2 : __('已出证')
+										// 	}
+										// },
 										{
 											field : 'order.physical_result',
 											title : '体检结果',
@@ -119,7 +118,16 @@ define(
 												0 : __('异常')
 											}
 										},
-										/*{
+                                    // {
+                                    //     field : 'operate',
+                                    //     title : __('Operate'),
+                                    //     table : table,
+                                    //     events : Table.api.events.operate,
+                                    //     formatter : Table.api.formatter.operate,
+                                    // },
+
+
+										{
 											field : 'operate',
 											title : __('Operate'),
 											table : table,
@@ -141,13 +149,16 @@ define(
 											buttons : [
 													{
 														name : 'nav_table',
-														text : __('打印复印单'),
+														text : __('详情'),
 														// icon: 'fa fa-list',
 														classname : 'btn btn-xs btn-primary fuyandan btn-addtabs',
-														url : '/admin/service/search/printword?id={ids}'
+														url : '/index/service/search/info?id={ids}'
 													} ],
-										}*/ ] ]
+										} ] ]
 							});
+
+
+
 
 					// 为表格绑定事件
 					Table.api.bindevent(table);
@@ -174,17 +185,18 @@ define(
 
 					});
 					// 获取选中项
-					$(document).on("click", ".fuyandan", function() {
-//						Layer.alert("aaaaaaaaaaaa");
-//						var rows = table.bootstrapTable('getSelections');
-//						var str = '';
-//						for (var i = 0; i < rows.length; i++) {
-//							str += rows[i]['ids'] + ",";
-//						}
-//						basic = str.substr(0, str.length - 1);
-//					    window.location.href = "/admin/service/search/expUser?id="+basic;
+// 					$(document).on("click", ".fuyandan", function() {
+// //						Layer.alert("aaaaaaaaaaaa");
+// //						var rows = table.bootstrapTable('getSelections');
+// //						var str = '';
+// //						for (var i = 0; i < rows.length; i++) {
+// //							str += rows[i]['ids'] + ",";
+// //						}
+// //						basic = str.substr(0, str.length - 1);
+// //					    window.location.href = "/admin/service/search/expUser?id="+basic;
+//
+// 					});
 
-					});
 				},
 				add : function() {
 					Controller.api.bindevent();
@@ -199,4 +211,6 @@ define(
 				}
 			};
 			return Controller;
+
+
 		});

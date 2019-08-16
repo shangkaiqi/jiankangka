@@ -63,9 +63,26 @@
 				src="data:image/jpeg;base64,{$body['images']}" border="0">
 		</div>
 		<div class="wait_physical">
-			体检结果：<span>{$result}</span>
+			体检结果：<span style="color:#DC143C;">{$result}</span><br>
+			打卡状态：<span style="color:#DC143C;">{$print['is_print']}</span><br>
+			已打卡次数：<span style="color:#DC143C;">{$print_counts}</span>
 		</div>
-
+		<!-- <div class="wait_physical">
+			打卡状态：<span>{$print['is_print']}</span>
+			{if condition="$print.is_print == '已打卡'"}
+			打卡日期：<span>{$print.employ_num_time|date="y年m月d日",###}</span>
+			有效期：<span>{$print.valid_time|date="y年m月d日",###}</span>
+            {/if}
+		</div> -->
+		
+        
+			{foreach $counts_info as $v}
+			<div class="wait_physical" style="margin-left:10px;">
+			　<span>打卡日期：{$v.employ_num_time|date="y年m月d日 H:i:s",###}</span>
+			  <span style="color:#DC143C;">有效期:{$v.valid_time|date="y年m月d日",###}</span>
+			</div>
+		    {/foreach}
+		
 		<div id="avatar_ad"></div>
 		<div class="form-group layer-footer">
 			<div class="col-xs-12 col-sm-8">
@@ -109,6 +126,7 @@
 				dataType : "json",
 				async : true,
 				success : function(obj) {
+
 				},
 				error : function(msg) {
 					$("#aaa").html(msg.responseText);
@@ -125,24 +143,29 @@
         LODOP.ADD_PRINT_SETUP_BKIMG("C:\\Users\\Shilh\\Desktop\\QQ截图20190702132927.png");
         LODOP.ADD_PRINT_TEXT("32mm", "25mm", "100", "30", "{$print['name']}");//姓名
         LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 8);
-        LODOP.ADD_PRINT_TEXT("32mm", "48mm", "100", "30", "{$print['sex']}");//性别
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+        LODOP.ADD_PRINT_TEXT("32mm", "46mm", "100", "30", "{$print['sex']}");//性别
         LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 8);
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
         LODOP.ADD_PRINT_TEXT("36mm", "25mm", "100", "30", "{$print['employee']}");//从业类别
         LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 8);
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
         LODOP.ADD_PRINT_TEXT("41mm", "25mm", "60mm", "30", "{$print['obtain_employ_number']}"); //健康证号
         LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 8);
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
         LODOP.ADD_PRINT_TEXT("45.5mm", "25mm", "100", "30", "{$print['endtime']}");//到期时间
         LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 8);
-        LODOP.ADD_PRINT_IMAGE("30mm","62mm","40mm","40mm","<img style=\"position:absolute;left:1px;top:1px;\" height='75' width='62' src=\"data:image/jpeg;base64,{$print['images']}\"/><img style=\"position:absolute;top:40px;\" height='40' width='40' border='0' src='{$print['avatar']}' style='z-index: 999'/>");
-        LODOP.ADD_PRINT_IMAGE("29mm","51mm","11.91mm","11.91mm","<img src=\"http://39.100.89.92:8080/qrcode/build?text=http://39.100.89.92:8080&label=FastAdmin&size=35&padding=2\">"); //二维码
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+        LODOP.ADD_PRINT_IMAGE("32mm","51mm","50mm","50mm","<img src=\"http://39.100.89.92:8080/qrcode/build?text=http://39.100.89.92:8080&label=FastAdmin&size=50&padding=2\"><img style=\"position:absolute;top:1px;\" height='90' width='75' src=\"data:image/jpeg;base64,{$print['images']}\"/><img style=\"position:absolute;top:55px;left:25px;\" height='50' width='50' border='0' src='{$print['avatar']}' style='z-index:10'/>"); //二维码
         LODOP.ADD_PRINT_TEXT("50mm", "25mm", "100", "30", "{$print['company']}");//体检单位
         LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
-        LODOP.SET_PRINT_STYLEA(0, "FontSize", 8);
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
     };
 /**
  * 工牌正面
@@ -348,7 +371,7 @@ h3 {
 .wait_physical {
 	border-bottom: 1px solid #eee;
 	font-size: 18px;
-	margin: 10px auto;
+	margin-left:10px;
 }
 </style>
 

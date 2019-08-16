@@ -32,9 +32,15 @@ class Common extends Frontend
     {
         $params = $this->request->post('order_num');
         $date['employ_num_time'] = time();
+        
+        $date['is_print'] = 1;//更改打卡状态
+        $date['valid_time'] = strtotime('next year');//有效期
+        
         $where['obs_id'] = $this->busId;
         $where['order_serial_number'] = $params;
         db('order')->where($where)->update($date);
+
+    
     }
 
     public function getInspece($parent)

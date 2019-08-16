@@ -1,7 +1,7 @@
-<!-- <OBJECT classid="clsid:F1317711-6BDE-4658-ABAA-39E31D3704D3"
+<OBJECT classid="clsid:F1317711-6BDE-4658-ABAA-39E31D3704D3"
 	codebase="SDRdCard.cab#version=2,0,1,0" width=0 height=0 id=idcard
-	name=rdcard> </OBJECT> -->
-	<form id="edit-form" data-toggle="validator" class="form-horizontal"
+	name=rdcard> </OBJECT>
+<form id="edit-form" data-toggle="validator" class="form-horizontal"
 	method="POST" action="">
 
 	<div class="form-group">
@@ -102,7 +102,7 @@
 
 <script src="/jquery.min.js"></script>
 <script src="/jquery.webcam.min.js"></script>
-<!-- <script for=idcard event="Readed()">
+<script for=idcard event="Readed()">
 	document.getElementById("avatar").value = rdcard.JPGBuffer;
 	document.getElementById("imgs").setAttribute("src",
 			"data:image/jpeg;base64," + rdcard.JPGBuffer);
@@ -119,103 +119,49 @@
 
 <script for=idcard event="Opened()">
 	//window.close();
-</script> -->
+</script>
 
 <script language="javascript" src="/LodopFuncs.js"></script>
 <script type="text/javascript">
-	// window.onbeforeunload = onbeforeunload_handler;
-	// function onbeforeunload_handler() {
-	// 	var pp;
-	// 	pp = rdcard.closeport();
-	// 	rdcard.deleteoutputfile();
-	// }
-
+	window.onbeforeunload = onbeforeunload_handler;
+	function onbeforeunload_handler() {
+		var pp;
+		pp = rdcard.closeport();
+		rdcard.deleteoutputfile();
+	}
 	$(document).ready(function() {
-		if(!window.WebSocket)
-		{
-			alert("该版本浏览器不支持WebSocket");
+		$("#express").hide();
+
+		$("#identitycard").blur(function() {
+			//130523198901020301         
+			var card = $("#identitycard").val();
+			var birthday = card.substring(6, 14);
+			var age = jsGetAge(birthday);
+			$("#c-age").val(age);
+		});
+		$("#express-1").click(function() {
+			$("#express").show();
+		});
+		$("#express-1").click(function() {
+			$("#express").show();
+		});
+		var pp1;
+		var conn;
+		conn = rdcard.getstate();
+		if (conn == 0) {
+			pp1 = rdcard.openport();
+			if (pp1 == 0) {
+				setTimeout("st()", 3000, true);
+			}
 		}
-
-		var websocket = new WebSocket("ws://127.0.0.1:9000/");
-		    //console.log(websocket);
-
-			websocket.onopen = function(evt) 
-			{ 
-            	//onOpen(evt) 
-				websocket.send("<ReadIdCard>");
-					// console.log(evt);
-        	}; 
-
-        	websocket.onclose = function(evt) 
-			    { 
-            	//onClose(evt) 
-	
-				
-        	}; 
-
-        	websocket.onmessage = function(evt) 
-			   {   
-				var evtData = evt.data;
-				var dataInfo = evtData.split(',');
-
-				console.log(dataInfo);
-				var addrstr = document.getElementById("avatar").value = dataInfo[12].substr(0,dataInfo[12].length-1);
-                // console.log(addrstr);
-	            document.getElementById("imgs").setAttribute("src","data:image/jpg;base64,"+addrstr);
-	            document.getElementById("identitycard").value = dataInfo[8];
-	            document.getElementById("c-username").value = dataInfo[2];
-				var age = jsGetAge(dataInfo[6]);
-				document.getElementById("c-age").value = age;
-				// document.getElementById("c-sex").value = dataInfo[3];
-				// console.log(dataInfo[3]);
-
-
-				//console.log(evt);
-            	//onMessage(evt) 
-				//document.getElementById("cardinfo").value = evt.data;
-				websocket.close();
-         }; 
-
-        	websocket.onerror = function(evt) 
-			    { 
-            	//onError(evt) 
-				      websocket.close();
-        	}; 
-
-
-		// $("#express").hide();
-
-		// $("#identitycard").blur(function() {
-		// 	//130523198901020301         
-		// 	var card = $("#identitycard").val();
-		// 	var birthday = card.substring(6, 14);
-		// 	var age = jsGetAge(birthday);
-		// 	$("#c-age").val(age);
-		// });
-		// $("#express-1").click(function() {
-		// 	$("#express").show();
-		// });
-		// $("#express-1").click(function() {
-		// 	$("#express").show();
-		// });
-		// var pp1;
-		// var conn;
-		
-		// conn = rdcard.getstate();
-		// if (conn == 0) {
-		// 	pp1 = rdcard.openport();
-		// 	if (pp1 == 0) {
-		// 		setTimeout("st()", 3000, true);
-		// 	}
-		// }
 
 	});
 
 	//js读取身份证信息		
-	// function st() {
-	// 	var pp;
-	// 	pp = rdcard.ReadCard2();
-	// }
+	function st() {
+		var pp;
+		pp = rdcard.ReadCard2();
+	}
 
 	function jsGetAge(strBirthday) {
 		var returnAge;

@@ -4,6 +4,7 @@ namespace app\index\controller\service;
 use app\common\controller\Backend;
 use app\index\controller\Common;
 use app\common\controller\Frontend;
+use app\index\controller\result\Resultcheck;
 
 /**
  * 体检列表
@@ -14,9 +15,14 @@ class Search extends Frontend
 {
 
     protected $model = null;
-
+    protected $blood = 0;
+    protected $type = 0;
+    protected $orderde = null;
+    protected $inspect = null;
+    protected $admin = null;
+    protected $order = null;
     protected $comm = null;
-
+    protected $comm1 = null;
     // 开关权限开启
     protected $noNeedRight = [
         '*'
@@ -38,6 +44,11 @@ class Search extends Frontend
         $comm = new Common();
         $this->comm = $comm;
         $this->view->assign("pid", $comm->getEmployee());
+
+        $this->inspect = model("Inspect");
+        $this->admin = model("Admin");
+        $this->order = model("Order");
+        $this->orderde = model("OrderDetail");
     }
 
     public function index()
@@ -664,13 +675,10 @@ EOF;
             $printInfo['images'] = $row['images'];
             $printInfo['endtime'] = date('Y-m-d',strtotime('+1year'));
             $printInfo['physictype'] = $row['employee_id'];
-            
-            
             $date['employ_num_time'] = time();
             $where['obs_id']= $this->busId;
             $where['order_serial_number']= $row['order_serial_number'];
-            db('order')->where($where)->update($date);   
-            
+            db('order')->where($where)->update($date);
             $printArr[] = $this->html($printInfo);
             
         }
@@ -701,7 +709,7 @@ EOF;
                 LODOP.PRINT_INITA(\"0\", \"0\", \"86.6mm\", \"56.4mm\", \"打印控件功能演示_Lodop功能_在线编辑获得程序代码\");
                 {$str}
 
-		        if (LODOP.SET_PRINTER_INDEX({$print}))
+//		        if (LODOP.SET_PRINTER_INDEX({$print}))
                 LODOP.PREVIEW();
             }
             </script>
@@ -844,4 +852,51 @@ EOF;
         }
         $this->comm->exportExcel("userPhysial", $xlsCell, $xlsData);
     }
+/**
+ *  详细信息
+ * */
+    public function info(){
+        $id = input("get.id");
+        $info = db('physical_users')->where("id",$id)->find();
+        $adminid = $this->auth->id;
+        $admindata = db('admin')->field("nickname")->where("id",$adminid)->find();
+        foreach ($admindata as $v) {
+            $info['nickname'] = $v;
+        }
+        $countWhere['is_print'] = 1;
+        $countWhere['identitycard'] = $info['identitycard'];
+        $count = db("order")->where($countWhere)->count();
+        $this->assign("count",$count);
+        $order_id =$info['order_serial_number'];
+        /**
+         * 血检信息
+         */
+        $blood = array();
+        $blood = $this->comm->inspect(0, $order_id);
+        $this->view->assign("blood", $blood);
+        /**
+         * 便检信息
+         */
+        $conven = array();
+        $conven = $this->comm->inspect(1, $order_id);
+        $this->view->assign("conven", $conven);
+        /**
+         * 体检信息
+         */
+        $body = array();
+        $body = $this->comm->inspect(2, $order_id);
+        $this->view->assign("body", $body);
+        /**
+         * 透視信息
+         */
+        $tous = array();
+        $tous = $this->comm->inspect(3, $order_id);
+        $this->view->assign("tous", $tous);
+        $this->assign("info",$info);
+        return $this->view->fetch();
+    }
+
+
+
+
 }

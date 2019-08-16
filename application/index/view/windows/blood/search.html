@@ -66,6 +66,43 @@
 		<div class="wait_physical"style="padding-left: 45px;">
 			待体检项：<span style="color:red;">{$wait_physical}</span>
 		</div>
+
+		<form id="edit-form" role="form" data-toggle="validator" method="POST"
+			  action="/index/windows/blood/save">
+			{foreach $inspect as $index=>$vo}
+			<div class="form-group">
+				<input type="hidden" value="{$vo['id']}"> <label
+					for="c-nickname" class="control-label col-xs-12 col-sm-2">{$vo.name}:</label>
+				<div class="form-inline">
+					<input type="hidden" name="order_serial_number"
+						   value="{$body['order_serial_number']}"> <select
+						class="first form-control" name='frist[]'
+						onchange="getInspect({$vo.id},this.value)" style="width: 100px;">
+					<option value="0-{$vo.id}" {if condition="$vo.physical_result eq 0"
+							}selected="selected"{/if}>阴性</option>
+					<option value="1-{$vo.id}" {if condition="$vo.physical_result eq 1"
+							}selected="selected"{/if}>阳性</option>
+				</select> <select id='inspace-1-{$vo.id}' class="second form-control"
+								  name="result[]"
+								  style="width: 100px;{if condition='$vo.physical_result neq 1'}visibility:hidden{/if}">
+					{foreach $vo.values as $k=>$v}
+					<option value="{$v['id']}" {if
+							condition="$v.id == $vo.physical_result_ext" }selected="selected"{/if}>{$v['name']}</option>
+					{/foreach}
+				</select>
+				</div>
+			</div>
+			{/foreach}
+
+			<div class="form-group layer-footer">
+				<label class="control-label col-xs-12 col-sm-2"></label>
+				<div class="col-xs-12 col-sm-8">
+					<button type="submit" class="btn btn-success btn-embossed">保存登记信息</button>
+					<button type="reset" class="btn btn-default btn-embossed">重置</button>
+				</div>
+			</div>
+
+		</form>
 		
 		<div class="opertor">操作员： {$operate['nickname']}</div>
 	</div>

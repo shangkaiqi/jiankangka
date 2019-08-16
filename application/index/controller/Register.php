@@ -163,6 +163,8 @@ class Register extends Frontend
                 $prefix = "03".$bs_id['bs_id'] .mt_rand(0,9). date("y", time());
                 $ob_where['obtain_employ_number'] = ["like",$prefix."%"];
                 $ob_where['obs_id'] = $this->busId;
+                $par['identitycard'] = $param['identitycard'];//向order表添加身份证号
+                $par['is_print'] = 0;//order表打印状态，0未打卡，1打卡
                 $ob_num = $this->order->where($ob_where)->lock(true)->find();
                 if(empty($ob_num['obtain_employ_number'])){
                     $obnum = $prefix."000001";
@@ -401,7 +403,7 @@ class Register extends Frontend
         LODOP.ADD_PRINT_TEXT(1030, 370, 160, 26, "{$print['order_serial_number']}");
         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
 
-        LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img style=\"width:240px;height:300px;\" src=\"data:image/jpeg;base64,{$print['images']}\"/>");
+        LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img style=\"width:102px;height:126px;\" src=\"data:image/jpeg;base64,{$print['images']}\"/>");
         LODOP.SET_PRINT_STYLEA(0, "TransColor", "#0F0100");
         LODOP.ADD_PRINT_TABLE(290, 56, 680, 760, document.getElementById("print_8").innerHTML);
         
@@ -954,7 +956,7 @@ EOF;
 
 
 
-        				LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img style=\"width:240px;height:300px;\" src=\"data:image/jpeg;base64,{$print['images']}\"/>");
+        				LODOP.ADD_PRINT_IMAGE(160, 600, 102, 126, "<img style=\"width:102px;height:126px;\" src=\"data:image/jpeg;base64,{$print['images']}\"/>");
         				LODOP.SET_PRINT_STYLEA(0, "TransColor", "#0F0100");
         				LODOP.ADD_PRINT_TABLE(290, 56, 680, 760, document.getElementById("print_8").innerHTML);
 
