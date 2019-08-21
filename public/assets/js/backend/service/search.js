@@ -87,22 +87,24 @@ define(
 											title : '健康证号',
 											operate : false
 										},
-										{
-											field : 'company',
-											title : '体检单位',
-											operate : 'LIKE %...%',
-											placeholder : '请输入体检单位'
-										},
 										// {
-										// 	field : 'order.order_status',
-										// 	title : '体检状态',
-										// 	formatter : Table.api.formatter.label,
-										// 	searchList : {
-										// 		1 : __('已体检'),
-										// 		0 : __('体检中'),
-										// 		2 : __('已出证')
-										// 	}
+										// 	field : 'company',
+										// 	title : '体检单位',
+										// 	operate : 'LIKE %...%',
+										// 	placeholder : '请输入体检单位'
 										// },
+
+										{
+											field : 'order.order_status',
+											title : '体检状态',
+											formatter : Table.api.formatter.label,
+											searchList : {
+												0 : __('未体检'),
+												1 : __('体检中'),
+												2 : __('已体检'),
+												3 : __('已出卡')
+											}
+										},
 										{
 											field : 'order.physical_result',
 											title : '体检结果',
@@ -152,7 +154,8 @@ define(
 														text : __('详情'),
 														// icon: 'fa fa-list',
 														classname : 'btn btn-xs btn-primary fuyandan btn-addtabs',
-														url : '/index/service/search/info?id={ids}'
+														//url : '/index/service/search/info?id={ids}'
+														url:'service/search/info?id={ids}'
 													} ],
 										} ] ]
 							});

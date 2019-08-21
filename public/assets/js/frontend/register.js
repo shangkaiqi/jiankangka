@@ -48,7 +48,7 @@ define([ 'jquery', 'bootstrap', 'backend', 'table', 'form' ], function($,
 					title : "姓名"
 				},{
 					field : 'sex',
-					title : "性别",
+					title : "性别呵呵",
 					formatter: Table.api.formatter.label,
 					searchList: {1: __('女'), 0: __('男')}
 				}, {
