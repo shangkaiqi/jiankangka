@@ -1,0 +1,332 @@
+<div class="panel panel-default panel-intro" style="width: 1000px;">
+    <h3>结果录入</h3>
+    <div class="panel-body" style="position: relative; min-height: 400px">
+        
+        <div
+            style="border-bottom: 1px solid #eee; height: 215px; background-color: #eee; padding: 10px">
+            <div class="form-group width-1">
+                <div class="context-b">
+                    <i class="form-name" style="line-height:35px;">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</i><span class="form-controller width-2">{$userinfo['name']}</span>
+                </div>
+                <div class="context-b">
+                    <i class="form-name" style="line-height:35px;margin-left:-40px;">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</i><span class="form-controller width-3">
+                    {if condition="$userinfo['sex'] eq 0"}男{/if}
+                    {if condition="$userinfo['sex'] eq 1"}女{/if}
+                </span>
+                </div>
+                <div class="context-b">
+                    <i class="form-name" style="line-height:35px;margin-left:-30px;">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:</i><span class="form-controller width-3">{$userinfo['age']}</span>
+                </div>
+            </div>
+
+            <div class="form-group width-1">
+                <div class="context-a">
+                    <i class="form-name" style="line-height:35px;">身份证号:</i><span class="form-controller width-2">{$userinfo['identitycard']}</span>
+                </div>
+                <div class="context-a">
+                    <i class="form-name" style="line-height:30px;">联系电话:</i><span class="form-controller width-2">{$userinfo['phone']}</span>
+                </div>
+            </div>
+            <div class="form-group width-1">
+                <div class="context-a">
+                    <i class="form-name" style="line-height:30px;">登&nbsp;&nbsp;记&nbsp;&nbsp;号:</i><span class="form-controller width-2">{$userinfo['order_serial_number']}</span>
+                </div>
+                <div class="context-a">
+                    <i class="form-name" style="line-height:30px;">从业类别:</i><span class="form-controller width-2">{$userinfo['employee']}</span>
+                </div>
+            </div>
+            <div class="form-group width-1">
+                <div class="context-a">
+                    <i class="form-name" style="line-height:30px;">操&nbsp;&nbsp;作&nbsp;&nbsp;人:</i><span class="form-controller width-2">{$userinfo['nickname']}</span>
+                </div>
+                <div class="context-a">
+                    <i class="form-name" style="line-height:30px;">打卡次数:</i><span class="form-controller width-2">{$count}</span>
+                </div>
+            </div>
+            <div id="avatar_ad">
+                <img width="102" height="126"
+                    src="data:image/jpeg;base64,{$userinfo['images']}" border="0">
+            </div>
+        </div>
+        <hr>
+        {if condition="$orderdetail['order_status'] != 0"}
+        <form id="edit-form" role="form" method="POST"
+            action="{:url('result.resultcheck/save')}">
+            <!-- data-toggle="validator"  -->
+
+            <input type="hidden" name="order_serial_number"
+                value="{$userinfo['order_serial_number']}">
+            <div class="result">
+                <div class="result-a">
+                    <div class="result-blood">
+                        <h4>体征</h4>
+                         {foreach $body as $vo}
+                        <div style="margin:20px;">
+
+                        <span style="font-weight:bold;margin-right:10px;">{$vo.name}:</span>
+                        <span style="margin-right:8px;">
+                        {switch name="$vo.physical_result" }
+                        {case value="0" break="1"}阴性{/case}
+                        {case value="1"}阳性{/case}
+                        {default /}阴性
+                        {/switch}
+                        </span>
+                        <span style="color:red;">
+                        {foreach $vo.values as $v}
+                        {if condition="$v.id == $vo.physical_result_ext"}({$v['name']}){/if}
+                        {/foreach}
+                        </span>
+                        </div>
+                        {/foreach}
+
+                    </div>
+                    <div class="result-blood">
+                        <h4>X线胸透或胸部拍片</h4>
+                         {foreach $tous as $vo}
+                        <div style="margin:20px;">
+
+                        <span style="font-weight:bold;margin-right:10px;">{$vo.name}:</span>
+                        <span style="margin-right:8px;">
+                        {switch name="$vo.physical_result" }
+                        {case value="0" break="1"}阴性{/case}
+                        {case value="1"}阳性{/case}
+                        {default /}阴性
+                        {/switch}
+                        </span>
+                        <span style="color:red;">
+                        {foreach $vo.values as $v}
+                        {if condition="$v.id == $vo.physical_result_ext"}({$v['name']}){/if}
+                        {/foreach}
+                        </span>
+                        </div>
+                        {/foreach}
+
+                    </div>
+                </div>
+                <div class="result-a">
+                    <div class="result-blood" style="font-size:14px;">
+                        <h4>便检</h4>
+
+                        {foreach $conven as $vo}
+                        <div style="margin:20px;">
+
+                        <span style="font-weight:bold;margin-right:10px;">{$vo.name}:</span>
+                        <span style="margin-right:8px;">
+                        {switch name="$vo.physical_result" }
+                        {case value="0" break="1"}阴性{/case}
+                        {case value="1"}阳性{/case}
+                        {default /}阴性
+                        {/switch}
+                        </span>
+                        <span style="color:red;">
+                        {foreach $vo.values as $v}
+                        {if condition="$v.id == $vo.physical_result_ext"}({$v['name']}){/if}
+                        {/foreach}
+                        </span>
+                        </div>
+                        {/foreach}
+
+                    </div>
+            <!-- {foreach $conven as $vo}
+            {$vo.name}:
+            {switch name="$vo.physical_result" }
+            {case value="0" break="1"}阴性{/case}
+            {case value="1"}阳性{/case}
+            {default /}阴性
+            {/switch}
+            {foreach $vo.values as $v}
+            {if condition="$v.id == $vo.physical_result_ext"}{$v['name']}{/if}
+            {/foreach}
+            {/foreach}
+                     -->
+                    <!-- <table border="1">
+                      {foreach $conven as $vo}
+                      <tr>
+
+                        <th> {$vo.name}</th>
+
+                        <th>
+                         {switch name="$vo.physical_result" }
+                            {case value="0" break="1"}阴性{/case}
+                            {case value="1"}阳性{/case}
+                            {default /}阴性
+                            {/switch}
+                        </th>
+                        <th>
+                            {foreach $vo.values as $v}
+                            {if condition="$v.id == $vo.physical_result_ext"}{$v['name']}{/if}
+                            {/foreach}
+                                       
+                        </th>
+                      </tr>
+                       {/foreach}
+                    </table> -->
+                    <div class="result-blood">
+                        <h4>血检结果</h4>
+                       
+                       {foreach $blood as $vo}
+                        <div style="margin:20px;">
+                        <span style="font-weight:bold;margin-right:10px;">{$vo.name}:</span>
+                        <span style="margin-right:8px;">
+                        {switch name="$vo.physical_result" }
+                        {case value="0" break="1"}阴性{/case}
+                        {case value="1"}阳性{/case}
+                        {default /}阴性
+                        {/switch}
+                        </span>
+                        <span style="color:red;">
+                        {foreach $vo.values as $v}
+                        {if condition="$v.id == $vo.physical_result_ext"}({$v['name']}){/if}
+                        {/foreach}
+                        </span>
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+            <div class="clean"></div>
+
+            
+        </form>
+        {else/}
+        <div style="font-size:24px;color:red;">未体检</div>
+       {/if}
+
+    </div>
+
+</div>
+<script>
+function getInspect(id,value){
+    var strs= new Array(); //定义一数组
+    strs=value.split("-"); //字符分割
+    if(strs[0]==0){
+        $("#inspace-1-"+id).css("visibility","hidden");
+    }else{
+        $("#inspace-1-"+id).css("visibility","visible");
+    };
+}
+</script>
+<style>
+h3 {
+    padding: 15px 10px;
+    border-bottom: 1px solid #ccc;
+    margin: auto;
+    background-color: #eee;
+}
+
+h4 {
+    height: 30px;
+    background-color: #ccc;
+    vertical-align: middle;
+    margin: 0;
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+#avatar_ad {
+    border: 1px solid #ccc;
+    width: 102px;
+    height: 126px;
+    position: absolute;
+    top: 100px;
+    right: 100px;
+}
+
+.width-1 {
+    width: 560px;
+}
+
+.width-2 {
+    width: 210px;
+}
+
+.width-3 {
+    width: 50px;
+}
+
+.width-4 {
+    width: 100px;
+    line-height: 31px;
+    text-align: right;
+}
+
+.form-group {
+    padding: 2px 0;
+    margin: 10px 0;
+}
+
+.form-controller {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    height: 31px;
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow
+        ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
+        .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-name {
+    height: 31px;
+    font-style: normal;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.context-b {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+.context-a {
+    display: inline-block;
+    margin-right: 2px;
+}
+
+.result {
+    
+}
+
+.result-a {
+    float: left;
+    width: 485px;
+}
+
+.result-blood {
+    border: 1px solid #eee;
+    width: 95%;
+    margin: 10px auto;
+}
+
+.clean {
+    clean: both;
+    margin: 0;
+    padding: 0;
+}
+</style>
+
+
+
+
+
+
+
+

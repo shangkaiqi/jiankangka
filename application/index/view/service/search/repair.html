@@ -1,0 +1,148 @@
+<div class="content">
+    <div class="panel panel-default panel-intro" style="width: 900px;">
+        <h3>补健康证</h3>
+        <div class="panel-body form-horizontal" style="position: relative;">
+            <div class="form-group">
+                <label for="c-username" class="control-label col-xs-12 col-sm-2">姓名:</label>
+                <div class="col-xs-12 col-sm-4">
+                    <span class="form-control">{$order['name']}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-nickname" class="control-label col-xs-12 col-sm-2">身份证号:</label>
+                <div class="col-xs-12 col-sm-4">
+                    <span class="form-control">{$order['identitycard']}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-nickname" class="control-label col-xs-12 col-sm-2">性别:</label>
+                <div class="col-xs-12 col-sm-4">
+                    <span class="form-control">{$order['sex']}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-nickname" class="control-label col-xs-12 col-sm-2">年龄:</label>
+                <div class="col-xs-12 col-sm-4">
+                    <span class="form-control">{$order['age']}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-nickname" class="control-label col-xs-12 col-sm-2">手机:</label>
+                <div class="col-xs-12 col-sm-4">
+                    <span class="form-control">{$order['phone']}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-nickname" class="control-label col-xs-12 col-sm-2">从业单位:</label>
+                <div class="col-xs-12 col-sm-4">
+                    <span class="form-control">{$order['company']}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-nickname" class="control-label col-xs-12 col-sm-2">从业类别:</label>
+                <div class="col-xs-12 col-sm-4">
+                    <span class="form-control">{$order['employee']}</span>
+                </div>
+            </div>
+        </div>
+        <div style="float: left;margin-left:630px;margin-top:-250px;">
+            <img width="102" height="126" src="data:image/jpeg;base64,{$order['images']}" alt="">
+        </div>
+        <div style="margin-left:80px;">
+            <button type="button" onclick="myPreview()" class='btn btn-success btn-embossed'>补健康证</button>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    {include file="common/physicalform" /}
+    <script src="/LodopFuncs.js"></script>
+    <style>
+        h3 {
+            padding: 15px 10px;
+            border-bottom: 1px solid #ccc;
+            margin: auto;
+            background-color: #eee;
+        }
+
+        .opertor {
+            margin: auto;
+            font-size: 24px;
+            padding: 10px;
+        }
+
+        #avatar_ad {
+            border: 1px solid #ccc;
+            width: 102px;
+            height: 126px;
+            position: absolute;
+            top: 27%;
+            right: 20%;
+        }
+
+        .wait_physical {
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+            padding: 10px;
+            margin: 10px auto;
+        }
+    </style>
+</div>
+<script>
+    function myPreview() {
+        if({$order['physictype']}){
+            CreatePrintPage();
+        }else{
+            CreatePrintPage1();
+        }
+
+        if (LODOP.SET_PRINTER_INDEX({$order['print_card_id']})){
+            $.ajax({
+                url : "common/updatePrint",
+                data : {
+                    'order_num' : {$order_id}
+                },
+                type : "post",
+                dataType : "json",
+                async : true,
+                success : function(obj) {
+
+                },
+                error : function(msg) {
+                    $("#aaa").html(msg.responseText);
+                }
+
+            })
+        }
+        LODOP.PREVIEW();
+
+    };
+    function CreatePrintPage() {
+        LODOP = getLodop();
+        LODOP.PRINT_INITA("0", "0", "86.6mm", "56.4mm", "打印控件功能演示_Lodop功能_在线编辑获得程序代码");
+        LODOP.ADD_PRINT_SETUP_BKIMG("C:\\Users\\Shilh\\Desktop\\QQ截图20190702132927.png");
+        LODOP.ADD_PRINT_TEXT("32mm", "25mm", "100", "30", "{$order['name']}");//姓名
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+        LODOP.ADD_PRINT_TEXT("32mm", "46mm", "100", "30", "{$order['sex']}");//性别
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+        LODOP.ADD_PRINT_TEXT("36mm", "25mm", "100", "30", "{$order['employee']}");//从业类别
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+        LODOP.ADD_PRINT_TEXT("41mm", "25mm", "60mm", "30", "{$order['obtain_employ_number']}"); //健康证号
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+        LODOP.ADD_PRINT_TEXT("45.5mm", "25mm", "100", "30", "{$order['valid_time']}");//到期时间
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+        LODOP.ADD_PRINT_IMAGE("32mm","51mm","50mm","50mm","<img src=\"http://39.100.89.92:8080/qrcode/build?text=http://39.100.89.92:8080&label=FastAdmin&size=50&padding=2\"><img style=\"position:absolute;top:1px;\" height='90' width='75' src=\"data:image/jpeg;base64,{$order['images']}\"/><img style=\"position:absolute;top:55px;left:25px;\" height='50' width='50' border='0' src='{$order['avatar']}' style='z-index:10'/>"); //二维码
+        LODOP.ADD_PRINT_TEXT("50mm", "25mm", "100", "30", "{$order['busisess_name']}");//体检单位
+        LODOP.SET_PRINT_STYLEA(0, "FontName", "华文楷体");
+        LODOP.SET_PRINT_STYLEA(0, "FontSize", 9);
+        LODOP.SET_PRINT_STYLEA(0, "Bold",1);
+    };
+</script>
